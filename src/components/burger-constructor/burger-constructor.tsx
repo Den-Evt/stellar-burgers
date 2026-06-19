@@ -14,8 +14,6 @@ import {
   setOrderModalData
 } from '../../services/slices/orders-slice';
 import { clearConstructor } from '../../services/slices/constructor-slice';
-import { getFeeds } from '../../services/slices/feed-slice';
-import { getProfileOrders } from '../../services/slices/profile-orders-slice';
 
 export const BurgerConstructor: FC = () => {
   const dispatch = useDispatch();
@@ -31,9 +29,6 @@ export const BurgerConstructor: FC = () => {
   useEffect(() => {
     if (orderModalData) {
       dispatch(clearConstructor());
-      // Обновляем ленту заказов и историю заказов после успешного заказа
-      dispatch(getFeeds());
-      dispatch(getProfileOrders());
     }
   }, [orderModalData, dispatch]);
 
@@ -47,7 +42,9 @@ export const BurgerConstructor: FC = () => {
 
     const ingredients = [
       constructorItems.bun._id,
-      ...constructorItems.ingredients.map((item) => item._id),
+      ...constructorItems.ingredients.map(
+        (item: TConstructorIngredient) => item._id
+      ),
       constructorItems.bun._id
     ];
 

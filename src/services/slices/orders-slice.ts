@@ -16,15 +16,10 @@ export const orderBurger = createAsyncThunk(
   'orders/orderBurger',
   async (ingredients: string[]) => {
     const response = await orderBurgerApi(ingredients);
-    // Преобразуем ответ API в формат TOrder
+    // Дополняем ответ API полем ingredients
     const order: TOrder = {
-      _id: response.order._id,
-      status: response.order.status,
-      name: response.order.name,
-      createdAt: response.order.createdAt,
-      updatedAt: response.order.updatedAt,
-      number: response.order.number,
-      ingredients: ingredients // Используем переданные ингредиенты
+      ...response.order,
+      ingredients
     };
     return order;
   }
@@ -57,5 +52,4 @@ const ordersSlice = createSlice({
 });
 
 export const { setOrderModalData } = ordersSlice.actions;
-
 export default ordersSlice.reducer;

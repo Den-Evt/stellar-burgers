@@ -3,7 +3,7 @@ import { TConstructorIngredient, TIngredient } from '@utils-types';
 
 type TConstructorState = {
   constructorItems: {
-    bun: TIngredient | null;
+    bun: TConstructorIngredient | null;
     ingredients: TConstructorIngredient[];
   };
 };
@@ -15,23 +15,25 @@ const initialState: TConstructorState = {
   }
 };
 
-const constructorSlice = createSlice({
+export const constructorSlice = createSlice({
   name: 'constructor',
   initialState,
   reducers: {
-    addIngredient: (state, action: PayloadAction<TIngredient>) => {
-      const ingredient = action.payload;
-
-      if (ingredient.type === 'bun') {
-        // Булка заменяется
-        state.constructorItems.bun = ingredient;
-      } else {
-        // Начинки и соусы добавляются в массив
-        state.constructorItems.ingredients.push({
+    addIngredient: {
+      reducer: (state, action: PayloadAction<TConstructorIngredient>) => {
+        const ingredient = action.payload;
+        if (ingredient.type === 'bun') {
+          state.constructorItems.bun = ingredient;
+        } else {
+          state.constructorItems.ingredients.push(ingredient);
+        }
+      },
+      prepare: (ingredient: TIngredient) => ({
+        payload: {
           ...ingredient,
           id: `${ingredient._id}_${Date.now()}`
-        });
-      }
+        }
+      })
     },
     removeIngredient: (state, action: PayloadAction<string>) => {
       state.constructorItems.ingredients =
@@ -44,8 +46,10 @@ const constructorSlice = createSlice({
         (item) => item.id === action.payload
       );
       if (index > 0) {
-        const items = state.constructorItems.ingredients;
-        [items[index - 1], items[index]] = [items[index], items[index - 1]];
+        const temp = state.constructorItems.ingredients[index];
+        state.constructorItems.ingredients[index] =
+          state.constructorItems.ingredients[index - 1];
+        state.constructorItems.ingredients[index - 1] = temp;
       }
     },
     moveIngredientDown: (state, action: PayloadAction<string>) => {
@@ -53,15 +57,15 @@ const constructorSlice = createSlice({
         (item) => item.id === action.payload
       );
       if (index < state.constructorItems.ingredients.length - 1) {
-        const items = state.constructorItems.ingredients;
-        [items[index], items[index + 1]] = [items[index + 1], items[index]];
+        const temp = state.constructorItems.ingredients[index];
+        state.constructorItems.ingredients[index] =
+          state.constructorItems.ingredients[index + 1];
+        state.constructorItems.ingredients[index + 1] = temp;
       }
     },
     clearConstructor: (state) => {
-      state.constructorItems = {
-        bun: null,
-        ingredients: []
-      };
+      state.constructorItems.bun = null;
+      state.constructorItems.ingredients = [];
     }
   }
 });
