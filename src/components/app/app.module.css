@@ -35,3 +35,10 @@
   margin: 0 auto;
   color: red;
 }
+
+.ingredientDetailsPage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 120px;
+}

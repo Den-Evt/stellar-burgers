@@ -45,6 +45,22 @@ const OrderModalWrapper = ({ onClose }: { onClose: () => void }) => {
   );
 };
 
+const IngredientDetailsWrapper = () => {
+  const location = useLocation();
+  const isModal = location.state?.background;
+
+  if (isModal) {
+    return <IngredientDetails />;
+  }
+
+  return (
+    <div className={styles.ingredientDetailsPage}>
+      <h2 className={`text text_type_main-large mb-8`}>Детали ингредиента</h2>
+      <IngredientDetails />
+    </div>
+  );
+};
+
 const App = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -131,7 +147,10 @@ const App = () => {
               }
             />
 
-            <Route path='/ingredients/:id' element={<IngredientDetails />} />
+            <Route
+              path='/ingredients/:id'
+              element={<IngredientDetailsWrapper />}
+            />
             <Route path='/feed/:number' element={<OrderInfo />} />
             <Route
               path='/profile/orders/:number'
