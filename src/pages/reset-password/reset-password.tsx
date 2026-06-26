@@ -12,6 +12,12 @@ export const ResetPassword: FC = () => {
 
   const handleSubmit = (e: SyntheticEvent) => {
     e.preventDefault();
+
+    if (password.length < 6) {
+      setError(new Error('Пароль должен содержать минимум 6 символов'));
+      return;
+    }
+
     setError(null);
     resetPasswordApi({ password, token })
       .then(() => {
