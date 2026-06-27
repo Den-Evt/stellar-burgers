@@ -62,27 +62,19 @@ describe('Constructor Reducer', () => {
   });
 
   test('должен добавлять булку', () => {
-    const initialState = {
-      constructorItems: {
-        bun: null,
-        ingredients: []
-      }
-    };
+    const initialState = constructorReducer(undefined, { type: 'INIT' });
     const action = addIngredient(mockBun);
     const state = constructorReducer(initialState, action);
+
     expect(state.constructorItems.bun).not.toBeNull();
     expect(state.constructorItems.bun?._id).toBe('bun1');
   });
 
   test('должен добавлять начинку', () => {
-    const initialState = {
-      constructorItems: {
-        bun: null,
-        ingredients: []
-      }
-    };
+    const initialState = constructorReducer(undefined, { type: 'INIT' });
     const action = addIngredient(mockIngredient1);
     const state = constructorReducer(initialState, action);
+
     expect(state.constructorItems.ingredients).toHaveLength(1);
     expect(state.constructorItems.ingredients[0]._id).toBe('ing1');
   });
@@ -92,58 +84,60 @@ describe('Constructor Reducer', () => {
       ...mockIngredient1,
       id: 'ing1_123'
     };
-    const initialState = {
-      constructorItems: {
-        bun: null,
-        ingredients: [ingredientWithId]
-      }
-    };
-    const action = removeIngredient('ing1_123');
-    const state = constructorReducer(initialState, action);
+    const initialState = constructorReducer(undefined, { type: 'INIT' });
+    const stateWithIngredient = constructorReducer(
+      initialState,
+      addIngredient(mockIngredient1)
+    );
+
+    const action = removeIngredient(
+      stateWithIngredient.constructorItems.ingredients[0].id
+    );
+    const state = constructorReducer(stateWithIngredient, action);
+
     expect(state.constructorItems.ingredients).toHaveLength(0);
   });
 
   test('должен перемещать ингредиент вверх', () => {
-    const ing1: TConstructorIngredient = { ...mockIngredient1, id: 'ing1_1' };
-    const ing2: TConstructorIngredient = { ...mockIngredient2, id: 'ing2_2' };
-    const initialState = {
-      constructorItems: {
-        bun: null,
-        ingredients: [ing1, ing2]
-      }
-    };
-    const action = moveIngredientUp('ing2_2');
-    const state = constructorReducer(initialState, action);
-    expect(state.constructorItems.ingredients[0].id).toBe('ing2_2');
-    expect(state.constructorItems.ingredients[1].id).toBe('ing1_1');
+    const initialState = constructorReducer(undefined, { type: 'INIT' });
+    let state = constructorReducer(
+      initialState,
+      addIngredient(mockIngredient1)
+    );
+    state = constructorReducer(state, addIngredient(mockIngredient2));
+
+    const secondIngredientId = state.constructorItems.ingredients[1].id;
+    const action = moveIngredientUp(secondIngredientId);
+    state = constructorReducer(state, action);
+
+    expect(state.constructorItems.ingredients[0]._id).toBe('ing2');
+    expect(state.constructorItems.ingredients[1]._id).toBe('ing1');
   });
 
   test('должен перемещать ингредиент вниз', () => {
-    const ing1: TConstructorIngredient = { ...mockIngredient1, id: 'ing1_1' };
-    const ing2: TConstructorIngredient = { ...mockIngredient2, id: 'ing2_2' };
-    const initialState = {
-      constructorItems: {
-        bun: null,
-        ingredients: [ing1, ing2]
-      }
-    };
-    const action = moveIngredientDown('ing1_1');
-    const state = constructorReducer(initialState, action);
-    expect(state.constructorItems.ingredients[0].id).toBe('ing2_2');
-    expect(state.constructorItems.ingredients[1].id).toBe('ing1_1');
+    const initialState = constructorReducer(undefined, { type: 'INIT' });
+    let state = constructorReducer(
+      initialState,
+      addIngredient(mockIngredient1)
+    );
+    state = constructorReducer(state, addIngredient(mockIngredient2));
+
+    const firstIngredientId = state.constructorItems.ingredients[0].id;
+    const action = moveIngredientDown(firstIngredientId);
+    state = constructorReducer(state, action);
+
+    expect(state.constructorItems.ingredients[0]._id).toBe('ing2');
+    expect(state.constructorItems.ingredients[1]._id).toBe('ing1');
   });
 
   test('должен очищать конструктор', () => {
-    const bun: TConstructorIngredient = { ...mockBun, id: 'bun_1' };
-    const ing: TConstructorIngredient = { ...mockIngredient1, id: 'ing1_1' };
-    const initialState = {
-      constructorItems: {
-        bun: bun,
-        ingredients: [ing]
-      }
-    };
+    const initialState = constructorReducer(undefined, { type: 'INIT' });
+    let state = constructorReducer(initialState, addIngredient(mockBun));
+    state = constructorReducer(state, addIngredient(mockIngredient1));
+
     const action = clearConstructor();
-    const state = constructorReducer(initialState, action);
+    state = constructorReducer(state, action);
+
     expect(state.constructorItems.bun).toBeNull();
     expect(state.constructorItems.ingredients).toHaveLength(0);
   });

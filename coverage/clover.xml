@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1782461784098" clover="3.2.0">
-  <project timestamp="1782461784099" name="All files">
-    <metrics statements="427" coveredstatements="232" conditionals="14" coveredconditionals="14" methods="25" coveredmethods="7" elements="466" coveredelements="253" complexity="0" loc="427" ncloc="427" packages="2" files="4" classes="4"/>
+<coverage generated="1782554332266" clover="3.2.0">
+  <project timestamp="1782554332266" name="All files">
+    <metrics statements="427" coveredstatements="232" conditionals="15" coveredconditionals="15" methods="25" coveredmethods="7" elements="467" coveredelements="254" complexity="0" loc="427" ncloc="427" packages="2" files="4" classes="4"/>
     <package name="services.slices">
-      <metrics statements="127" coveredstatements="127" conditionals="14" coveredconditionals="14" methods="7" coveredmethods="7"/>
+      <metrics statements="127" coveredstatements="127" conditionals="15" coveredconditionals="15" methods="7" coveredmethods="7"/>
       <file name="constructor-slice.ts" path="C:\Users\denum\dev\stellar-burgers\stellar-burgers\src\services\slices\constructor-slice.ts">
-        <metrics statements="81" coveredstatements="81" conditionals="10" coveredconditionals="10" methods="6" coveredmethods="6"/>
+        <metrics statements="81" coveredstatements="81" conditionals="11" coveredconditionals="11" methods="6" coveredmethods="6"/>
         <line num="1" count="1" type="stmt"/>
         <line num="2" count="1" type="stmt"/>
         <line num="3" count="1" type="stmt"/>
@@ -29,12 +29,12 @@
         <line num="21" count="1" type="stmt"/>
         <line num="22" count="1" type="stmt"/>
         <line num="23" count="1" type="cond" truecount="1" falsecount="0"/>
-        <line num="24" count="2" type="stmt"/>
-        <line num="25" count="2" type="cond" truecount="1" falsecount="0"/>
-        <line num="26" count="1" type="stmt"/>
-        <line num="27" count="1" type="stmt"/>
-        <line num="28" count="1" type="stmt"/>
-        <line num="29" count="1" type="stmt"/>
+        <line num="24" count="9" type="stmt"/>
+        <line num="25" count="9" type="cond" truecount="1" falsecount="0"/>
+        <line num="26" count="2" type="stmt"/>
+        <line num="27" count="9" type="cond" truecount="1" falsecount="0"/>
+        <line num="28" count="7" type="stmt"/>
+        <line num="29" count="7" type="stmt"/>
         <line num="30" count="1" type="stmt"/>
         <line num="31" count="1" type="cond" truecount="1" falsecount="0"/>
         <line num="32" count="1" type="stmt"/>
@@ -118,8 +118,8 @@
         <line num="26" count="1" type="cond" truecount="1" falsecount="0"/>
         <line num="27" count="1" type="stmt"/>
         <line num="28" count="1" type="cond" truecount="1" falsecount="0"/>
-        <line num="29" count="1" type="stmt"/>
-        <line num="30" count="1" type="stmt"/>
+        <line num="29" count="3" type="stmt"/>
+        <line num="30" count="3" type="stmt"/>
         <line num="31" count="1" type="stmt"/>
         <line num="32" count="1" type="stmt"/>
         <line num="33" count="1" type="stmt"/>

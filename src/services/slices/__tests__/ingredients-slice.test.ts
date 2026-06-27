@@ -42,43 +42,41 @@ describe('Ingredients Reducer', () => {
   });
 
   test('должен обрабатывать getIngredients.pending', () => {
-    const initialState = {
-      ingredients: [],
-      isLoading: false,
-      error: undefined
-    };
-    const action = { type: getIngredients.pending.type };
-    const state = ingredientsReducer(initialState, action);
+    const state = ingredientsReducer(undefined, {
+      type: getIngredients.pending.type
+    });
     expect(state.isLoading).toBe(true);
     expect(state.error).toBeUndefined();
   });
 
   test('должен обрабатывать getIngredients.fulfilled', () => {
-    const initialState = {
-      ingredients: [],
-      isLoading: true,
-      error: undefined
-    };
+    const initialState = ingredientsReducer(undefined, { type: 'INIT' });
+    const loadingState = ingredientsReducer(initialState, {
+      type: getIngredients.pending.type
+    });
+
     const action = {
       type: getIngredients.fulfilled.type,
       payload: mockIngredients
     };
-    const state = ingredientsReducer(initialState, action);
+    const state = ingredientsReducer(loadingState, action);
+
     expect(state.ingredients).toEqual(mockIngredients);
     expect(state.isLoading).toBe(false);
   });
 
   test('должен обрабатывать getIngredients.rejected', () => {
-    const initialState = {
-      ingredients: [],
-      isLoading: true,
-      error: undefined
-    };
+    const initialState = ingredientsReducer(undefined, { type: 'INIT' });
+    const loadingState = ingredientsReducer(initialState, {
+      type: getIngredients.pending.type
+    });
+
     const action = {
       type: getIngredients.rejected.type,
       error: { message: 'Ошибка загрузки' }
     };
-    const state = ingredientsReducer(initialState, action);
+    const state = ingredientsReducer(loadingState, action);
+
     expect(state.isLoading).toBe(false);
     expect(state.error).toBe('Ошибка загрузки');
   });
